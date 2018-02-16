@@ -42,6 +42,7 @@ class Basecamp {
 			char* parm1;
 			const char* parm2;
 		};
+		char* topic;
 		void publish(char*);
 #ifndef BASECAMP_NOWIFI
 		String mac;

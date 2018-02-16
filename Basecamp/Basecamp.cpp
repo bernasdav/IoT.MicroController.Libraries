@@ -57,7 +57,7 @@ bool Basecamp::begin() {
 		if(mqttuser != "") {
 			mqtt.setCredentials(mqttuser,mqttpass);
 		};
-		DEBUG_PRINTLN(configuration.get("MQTTTopic"));
+		topic = configuration.getCString("MQTTTopic");
 		xTaskCreatePinnedToCore(&MqttHandling, "MqttTask", 4096, (void*) &mqtt, 5, NULL,0);
 	};
 #endif
@@ -97,8 +97,8 @@ bool Basecamp::begin() {
 		web.addInterfaceElement("MQTTUser", "input", "MQTT Username:","#configform" , "MQTTUser");
 		web.addInterfaceElement("MQTTPass", "input", "MQTT Password:","#configform" , "MQTTPass");
 		web.setInterfaceElementAttribute("MQTTPass", "type", "password");
+		web.addInterfaceElement("MQTTTopic", "input", "MQTT Topic:","#configform" , "MQTTTopic");
 	}
-	web.addInterfaceElement("MQTTHost", "input", "MQTT Topic:","#configform" , "MQTTTopic");
 	web.addInterfaceElement("saveform", "input", " ","#configform");
 	web.setInterfaceElementAttribute("saveform", "type", "button");
 	web.setInterfaceElementAttribute("saveform", "value", "Save");
@@ -119,7 +119,7 @@ bool Basecamp::begin() {
 
 #ifndef BASECAMP_NOMQTT
 void Basecamp::publish(char* payload){
-	String topicName =	configuration.get("MQTTTopic");
+	char* topicName = configuration.getCString("MQTTTopic");
 	mqtt.publish(topicName, 1, true, payload);
 }
 #endif
