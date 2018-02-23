@@ -329,6 +329,8 @@ void AsyncMqttClient::_onConnect(AsyncClient* client) {
   }
   _client.send();
   _lastClientActivity = millis();
+
+  for (auto callback : _onConnectUserCallbacks) callback(true);
 }
 
 void AsyncMqttClient::_onDisconnect(AsyncClient* client) {

@@ -44,6 +44,8 @@ class Basecamp {
 		};
 		char* topic;
 		void publish(char*);
+		const char* macId();
+		void mqttConnect();
 #ifndef BASECAMP_NOWIFI
 		String mac;
 		WifiControl wifi;
